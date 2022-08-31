@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, Query } from '@nestjs/common';
+import {Query as ExpressQuery} from 'express-serve-static-core'
 import { createRestaurantDto } from './dto/create-restaurant.dto';
 import { UpdateRestaurantDto } from './dto/update-restaurant.dto';
 import { RestaurantsService } from './restaurants.service';
@@ -9,8 +10,8 @@ export class RestaurantsController {
     constructor(private restaurantsService: RestaurantsService) {}
 
     @Get()
-    async getAllRestaurants() : Promise<Restaurant[]> {
-        return this.restaurantsService.findAll()
+    async getAllRestaurants(@Query() query : ExpressQuery) : Promise<Restaurant[]> {
+        return this.restaurantsService.findAll(query)
     }
 
     @Post()
