@@ -2,6 +2,7 @@ import {  BadRequestException, Injectable, NotFoundException } from '@nestjs/com
 import { InjectModel } from '@nestjs/mongoose';
 import { Query } from 'express-serve-static-core';
 import * as mongoose from 'mongoose';
+import ApiFeatures from '../utils/apiFeatures.utils'
 import { Restaurant } from './schemas/restaurant.schema';
 
 @Injectable()
@@ -31,6 +32,10 @@ export class RestaurantsService{
 
     // create new restaurant => POST /restaurants
        async create(restaurant: Restaurant) : Promise<Restaurant>{
+
+            const location =  await ApiFeatures.getRestaurantLocation(restaurant.address)
+            console.log(location)
+
             const res = await this.restaurantModel.create(restaurant)
             return res
        }
