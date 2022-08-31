@@ -1,4 +1,4 @@
-import {  Injectable, NotFoundException } from '@nestjs/common';
+import {  BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Query } from 'express-serve-static-core';
 import * as mongoose from 'mongoose';
@@ -37,6 +37,11 @@ export class RestaurantsService{
 
     // get a restaurant by id => GET /restaurants/:id
        async findById(id:string) : Promise<Restaurant>{
+
+        const isValidId = mongoose.isValidObjectId(id)
+        if(!isValidId){
+          throw new BadRequestException('Wrong mongoose Id error. Please enter correct Id.')
+        }
         const restaurant = await this.restaurantModel.findById(id)
 
         if(!restaurant){
