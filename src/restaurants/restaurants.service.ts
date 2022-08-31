@@ -31,4 +31,13 @@ export class RestaurantsService{
         }
         return restaurant
        }
+
+    //    update a restaurant by Id => PUT /restaurant/:id
+      async updateById(id:string, restaurant: Restaurant) : Promise<Restaurant>{
+        return this.restaurantModel.findByIdAndUpdate(id, restaurant, {
+            new: true,
+            runValidators: true
+        })
+      }
+
 }
