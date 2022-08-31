@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {  Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { Restaurant } from './schemas/restaurant.schema';
@@ -38,6 +38,12 @@ export class RestaurantsService{
             new: true,
             runValidators: true
         })
+      }
+
+      // delete a restaurant by id => DELETE /restaurants.:id
+      async deleteById(id: string) : Promise<Restaurant>{
+        return await this.restaurantModel.findByIdAndDelete(id)
+        
       }
 
 }
